@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colibri - Drogeria</title>
+
+  <style>
+    /* === GLOBAL === */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+    }
+
+    /* === TOP BAR === */
+    .top-bar {
+      background-color: #e7f6f6;
+      text-align: center;
+      font-size: 14px;
+      padding: 5px;
+      color: #000;
+    }
+
+    /* === HEADER === */
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 30px;
+      border-bottom: 1px solid #ccc;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      height: 60px;
+      width: auto;
+    }
+
+    .search {
+      flex-grow: 1;
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      min-width: 250px;
+    }
+
+    .header-icons button,
+    .header-icons select {
+      margin-left: 10px;
+      padding: 8px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* === NAV === */
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      list-style: none;
+      padding: 10px 0;
+      margin: 0;
+      background-color: #fff;
+      border-bottom: 2px solid #ddd;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* === BANNER === */
+    .banner {
+      background-color: #d2e6e7;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .banner strong {
+      color: #e6007e;
+    }
+
+    /* === PRODUKT === */
+    .product {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 30px auto;
+      gap: 40px;
+    }
+
+    .product-images {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+    }
+
+    .product-images img#main-image {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.3s ease;
+    }
+
+    .thumbnails {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .thumbnails img.thumbnail {
+      flex: 1;
+      max-width: 30%;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease, transform 0.2s ease;
+      object-fit: cover;
+    }
+
+    .thumbnails img.thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    .thumbnails img.thumbnail.selected {
+      border-color: #e6007e;
+    }
+
+    .product-details {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-details h1 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .category,
+    .rating,
+    .description {
+      margin: 10px 0;
+      text-align: left;
+    }
+
+    /* === KAFELKI Z POJEMNOŚCIĄ / CENĄ === */
+    .sizes {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      justify-content: flex-start;
+    }
+
+    .sizes button {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      border: 2px solid #b3d9d9;
+      background-color: #f4fafa;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .sizes button:hover {
+      background-color: #dff5f5;
+      box-shadow: 0 0 10px rgba(0, 77, 77, 0.3);
+    }
+
+    .sizes button.selected {
+      background-color: #004d4d;
+      color: white;
+      border-color: #002a2a;
+      box-shadow: 0 0 15px rgba(0, 77, 77, 0.5);
+      transform: scale(1.05);
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .add-to-cart {
+      background-color: #004d4d;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .add-to-cart:hover {
+      filter: brightness(1.05);
+    }
+
+    .availability {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+      text-align: left;
+    }
+
+    .availability span {
+      color: green;
+      font-weight: bold;
+    }
+
+    /* === STOPKA === */
+    footer {
+      background-color: #eef3f4;
+      padding: 30px;
+      font-size: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px; /* mniejsze odstępy między kolumnami */
+    }
+
+    footer .footer-col {
+      min-width: 140px;
+      flex: 0 1 auto;
+      margin: 0 5px;
+      text-align: left;
+    }
+
+    footer .footer-social {
+      min-width: 140px;
+      flex: 0 1 auto;
+      margin: 0 5px;
+      text-align: left;
+      margin-left: auto; /* prawa strona */
+    }
+
+    footer h4 {
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .social-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #555;
+      font-size: 13px;
+      min-width: 60px;
+    }
+
+    .social-item svg {
+      width: 32px;
+      height: 32px;
+      fill: #777;
+      transition: transform 0.2s ease, fill 0.2s ease;
+    }
+
+    .social-item:hover svg {
+      transform: scale(1.1);
+      fill: #444;
+    }
+
+    .social-item span {
+      margin-top: 6px;
+    }
+
+    /* === POPUP KOSZYK (ładniejszy) === */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;              /* ukryte domyślnie */
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 360px;
+      padding: 24px 24px 20px;
+      box-shadow:
+        0 30px 60px rgba(0,0,0,0.15),
+        0 4px 12px rgba(0,0,0,0.08);
+      font-family: Arial, sans-serif;
+      color: #003b3b;
+      position: relative;
+      text-align: center;
+    }
+
+    /* mała ikonka "check" w kółku u góry */
+    .modal-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: #e7f6f6;
+      border: 2px solid #b3d9d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #004d4d;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 auto 12px auto;
+    }
+
+    .modal-box h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: #004d4d;
+    }
+
+    .modal-box p {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+      margin: 8px 0 20px 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .modal-actions a,
+    .modal-actions button {
+      flex: 1 1 140px;
+      min-width: 130px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      text-align: center;
+    }
+
+    .go-cart-btn {
+      background-color: #004d4d;
+      color: #fff;
+    }
+
+    .go-cart-btn:hover {
+      filter: brightness(1.07);
+    }
+
+    .continue-btn {
+      background-color: #f4fafa;
+      color: #004d4d;
+      border: 2px solid #b3d9d9;
+    }
+
+    .continue-btn:hover {
+      background-color: #dff5f5;
+    }
+
+    /* Close "x" (opcjonalne, w rogu) */
+    .modal-close-x {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      line-height: 1;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .modal-close-x:hover {
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .product {
+        flex-direction: column;
+      }
+
+      .main-header {
+        flex-direction: column;
+      }
+
+      .search {
+        margin: 10px 0;
+      }
+
+      .thumbnails img.thumbnail {
+        max-width: 30%;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-social {
+        margin-left: 0;
+      }
+
+      .social-icons {
+        justify-content: flex-start;
+      }
+
+      /* przyciski w popupie pod sobą na małych ekranach */
+      .modal-actions {
+        flex-direction: column;
+      }
+
+      .modal-actions a,
+      .modal-actions button {
+        flex: 1 1 auto;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pasek na górze -->
+  <div class="top-bar">
+    <p>Załóż aplikację już dziś i zyskaj aż <strong>50 punktów</strong> lojalnościowych na start!!</p>
+  </div>
+
+  <!-- Nagłówek -->
+  <header>
+    <div class="main-header">
+      <!-- Logo marki Colibri -->
+      <img src="images/colibri-logo.png" alt="Colibri logo" class="logo" />
+
+      <input type="text" placeholder="Znajdź mnie..." class="search" />
+      <div class="header-icons">
+        <button>Zaloguj się</button>
+        <button>Ulubione</button>
+        <button>Koszyk</button>
+        <select>
+          <option>PL</option>
+          <option>EN</option>
+        </select>
+      </div>
+    </div>
+
+    <nav>
+      <ul>
+        <li>Promocje</li>
+        <li>Nowości</li>
+        <li>Perfumy</li>
+        <li>Makijaż</li>
+        <li>Włosy</li>
+        <li>Twarz</li>
+        <li style="color: #e6007e;">Marki</li>
+        <li>Inne</li>
+        <li style="color: red;">🔥 WYPRZEDAŻ 🔥</li>
+      </ul>
+    </nav>
+
+    <div class="banner">
+      <p>Specjalnie dla was <strong>20% RABATU</strong> na Dzień Dziecka oraz <strong>DARMOWA DOSTAWA</strong> przy zakupach za minimum 99 zł! <strong>KOD: DD20</strong></p>
+    </div>
+  </header>
+
+  <!-- Sekcja produktu -->
+  <div class="product">
+    <div class="product-images">
+      <img src="images/Si1.jpg" alt="Perfumy" id="main-image" />
+      <div class="thumbnails">
+        <img src="images/Si2.jpg" alt="Miniatura 1" class="thumbnail" />
+        <img src="images/Si3.jpg" alt="Miniatura 2" class="thumbnail" />
+        <img src="images/Si4.jpg" alt="Miniatura 3" class="thumbnail" />
+      </div>
+    </div>
+
+    <div class="product-details">
+      <h1>Armani Si Eau de Parfum</h1>
+      <div class="category">Woda perfumowana dla kobiet</div>
+      <div class="rating">★ ★ ★ ★ ☆ (141)</div>
+      <div class="description">
+        Zapach preferowany przez kobiety. Woda perfumowana dla kobiet od Giorgio Armani to szyprowo-cytrusowa kompozycja z nutami jaśminu, paczuli i wanilii.
+      </div>
+
+      <div class="sizes">
+        <button data-size="100">100 ml<br><span class="old-price">699,00zł</span><br>489,00zł</button>
+        <button data-size="50">50 ml<br><span class="old-price">549,00zł</span><br>411,75zł</button>
+        <button data-size="30">30 ml<br><span class="old-price">385,00zł</span><br>274,31zł</button>
+      </div>
+
+      <button class="add-to-cart">DODAJ DO KOSZYKA</button>
+      <div class="availability">Dostępność: <span>W magazynie</span></div>
+    </div>
+  </div>
+
+  <!-- Stopka -->
+  <footer>
+    <div class="footer-col">
+      <h4>Kontakt dla firm</h4>
+      <p>
+        Formy płatności<br />
+        Dostawa i zwroty<br />
+        Regulaminy promocji
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Karta Colibri</h4>
+      <p>
+        Korzyści z zakupów<br />
+        Regulamin Karty Colibri<br />
+        Mapa strony
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>O Colibri</h4>
+      <p>
+        Kariera<br />
+        Kontakt<br />
+        FAQ
+      </p>
+    </div>
+
+    <div class="footer-social">
+      <h4>Media społecznościowe</h4>
+      <div class="social-icons">
+
+        <!-- Facebook -->
+        <a href="https://facebook.com" target="_blank" class="social-item" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07c0 4.99 3.66 9.13 8.44 9.93v-7.03H8.08v-2.9h2.36v-2.2c0-2.33 1.4-3.62 3.54-3.62 1.03 0 2.1.19 2.1.19v2.34h-1.18c-1.17 0-1.53.73-1.53 1.48v1.81h2.61l-.42 2.9h-2.19V22c4.78-.8 8.44-4.94 8.44-9.93z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com" target="_blank" class="social-item" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.054 1.97.24 2.43.4.61.24 1.05.53 1.51.99.46.46.75.9.99 1.51.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.24 1.97-.4 2.43a3.9 3.9 0 0 1-.99 1.51 3.9 3.9 0 0 1-1.51.99c-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.97-.24-2.43-.4a3.9 3.9 0 0 1-1.51-.99 3.9 3.9 0 0 1-.99-1.51c-.16-.46-.35-1.26-.4-2.43C2.17 15.78 2.16 15.4 2.16 12.2s.012-3.584.07-4.85c.054-1.17.24-1.97.4-2.43.24-.61.53-1.05.99-1.51.46-.46.9-.75 1.51-.99.46-.16 1.26-.35 2.43-.4 1.27-.06 1.65-.07 4.85-.07Zm0 1.8c-3.15 0-3.52.012-4.76.07-.98.045-1.51.207-1.86.344-.47.18-.8.39-1.15.74-.35.35-.56.68-.74 1.15-.14.35-.3.88-.35 1.86-.06 1.24-.07 1.61-.07 4.76s.012 3.52.07 4.76c.045.98.207 1.51.344 1.86.18.47.39.8.74 1.15.35.35.68.56 1.15.74.35.14.88.3 1.86.35 1.24.06 1.61.07 4.76.07s3.52-.012 4.76-.07c.98-.045 1.51-.207 1.86-.344.47-.18.8-.39 1.15-.74.35-.35.56-.68.74-1.15.14-.35.3-.88.35-1.86.06-1.24.07-1.61.07-4.76s-.012-3.52-.07-4.76c-.045-.98-.207-1.51-.344-1.86-.18-.47-.39-.8-.74-1.15a2.56 2.56 0 0 0-1.15-.74c-.35-.14-.88-.3-1.86-.35-1.24-.06-1.61-.07-4.76-.07Zm0 3.3a4.74 4.74 0 1 1 0 9.48 4.74 4.74 0 0 1 0-9.48Zm0 7.8a3.06 3.06 0 1 0 0-6.12 3.06 3.06 0 0 0 0 6.12Zm4.95-8.61a1.11 1.11 0 1 1 0-2.22 1.11 1.11 0 0 1 0 2.22Z"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- POPUP KOSZYK -->
+  <div class="modal-overlay" id="cart-modal">
+    <div class="modal-box">
+      <button class="modal-close-x" id="modal-close-x" aria-label="Zamknij">✕</button>
+
+      <div class="modal-icon">✓</div>
+
+      <h3>Dodano do koszyka</h3>
+      <p>Wybrany produkt został dodany do Twojego koszyka.</p>
+
+      <div class="modal-actions">
+        <a href="cart.html" class="go-cart-btn">Idź do koszyka</a>
+        <button class="continue-btn" id="continue-shopping-btn">Kontynuuj zakupy</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // miniaturki + wybór pojemności + popup koszyka
+    document.addEventListener("DOMContentLoaded", () => {
+      const mainImage = document.getElementById("main-image");
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      const sizeButtons = document.querySelectorAll(".sizes button");
+      const addToCartBtn = document.querySelector(".add-to-cart");
+      const modalOverlay = document.getElementById("cart-modal");
+      const continueBtn = document.getElementById("continue-shopping-btn");
+      const closeX = document.getElementById("modal-close-x");
+
+      // --- MINIATURKI ZDJĘĆ ---
+      thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener("click", () => {
+          const clickedSrc = thumbnail.src;
+          const mainSrc = mainImage.src;
+
+          mainImage.src = clickedSrc;
+          thumbnail.src = mainSrc;
+
+          thumbnails.forEach(t => t.classList.remove("selected"));
+          thumbnail.classList.add("selected");
+        });
+      });
+
+      // --- WYBÓR POJEMNOŚCI ---
+      sizeButtons.forEach(button => {
+        button.addEventListener("click", () => {
+          sizeButtons.forEach(btn => btn.classList.remove("selected"));
+          button.classList.add("selected");
+        });
+      });
+
+      function getSelectedSizeButton() {
+        return document.querySelector(".sizes button.selected");
+      }
+
+      // --- DODAJ DO KOSZYKA -> POKAŻ MODAL ---
+      addToCartBtn.addEventListener("click", () => {
+        const chosen = getSelectedSizeButton();
+
+        if (!chosen) {
+          alert("Wybierz pojemność przed dodaniem do koszyka 🙂");
+          return;
+        }
+
+        modalOverlay.style.display = "flex";
+      });
+
+      // --- KONTYNUUJ ZAKUPY -> SCHOWAJ MODAL ---
+      continueBtn.addEventListener("click", () => {
+        modalOverlay.style.display = "none";
+      });
+
+      // --- "X" w rogu -> SCHOWAJ MODAL ---
+      closeX.addEventListener("click", () => {
+        modalOverlay.style.display = "none";
+      });
+
+      // kliknięcie w tło poza boxem też zamyka
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.style.display = "none";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

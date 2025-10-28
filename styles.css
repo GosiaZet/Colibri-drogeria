@@ -1,0 +1,217 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.top-bar {
+  background-color: #e7f6f6;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+  color: #000;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  border-bottom: 1px solid #ccc;
+  flex-wrap: wrap;
+}
+
+.logo { height: 50px; }
+
+.search {
+  flex-grow: 1;
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-width: 250px;
+}
+
+.header-icons button, .header-icons select {
+  margin-left: 10px;
+  padding: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 10px 0;
+  background-color: #fff;
+  border-bottom: 2px solid #ddd;
+}
+
+nav ul li {
+  margin: 0 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.banner {
+  background-color: #d2e6e7;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #000;
+}
+
+.banner strong { color: #e6007e; }
+
+.product {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 30px auto;
+  gap: 40px;
+}
+
+.product-images {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.product-images img#main-image {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.thumbnails {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.thumbnails img.thumbnail {
+  flex: 1;
+  max-width: 30%;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+  object-fit: cover;
+}
+
+.thumbnails img.thumbnail:hover { transform: scale(1.05); }
+.thumbnails img.thumbnail.selected { border-color: #e6007e; }
+
+.product-details { flex: 1; min-width: 300px; }
+
+.product-details h1 { font-size: 28px; font-weight: 700; }
+.category, .rating, .description { margin: 10px 0; }
+
+/* Kafelki pojemności */
+.sizes {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  justify-content: flex-start;
+}
+
+.sizes button {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  border: 2px solid #b3d9d9;
+  background-color: #f4fafa;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sizes button:hover {
+  background-color: #dff5f5;
+  box-shadow: 0 0 10px rgba(0, 77, 77, 0.3);
+}
+
+.sizes button.selected {
+  background-color: #004d4d;
+  color: white;
+  border-color: #002a2a;
+  box-shadow: 0 0 15px rgba(0, 77, 77, 0.5);
+  transform: scale(1.05);
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.add-to-cart {
+  background-color: #004d4d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.availability {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.availability span { color: green; font-weight: bold; }
+
+footer {
+  background-color: #eef3f4;
+  padding: 30px;
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer div {
+  margin: 10px;
+  min-width: 150px;
+}
+
+footer h4 { margin-bottom: 10px; }
+
+.social-icons img {
+  width: 24px;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .product {
+    flex-direction: column;
+  }
+  .main-header {
+    flex-direction: column;
+  }
+  .search {
+    margin: 10px 0;
+  }
+  .thumbnails img.thumbnail { max-width: 30%; }
+}

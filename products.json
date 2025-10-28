@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "name": "Armani Si Eau de Parfum",
+    "category": "Woda perfumowana dla kobiet",
+    "rating": "★★★★☆ (141)",
+    "description": "Zapach preferowany przez kobiety. Woda perfumowana dla kobiet od Giorgio Armani to szyprowo...",
+    "sizes": [
+      { "size": 100, "price": "489,00zł", "oldPrice": "699,00zł" },
+      { "size": 50, "price": "411,75zł", "oldPrice": "549,00zł" },
+      { "size": 30, "price": "274,31zł", "oldPrice": "385,00zł" }
+    ],
+    "availability": "W magazynie",
+    "images": [
+      "images/Si1.jpg",
+      "images/Si2.jpg",
+      "images/Si3.jpg",
+      "images/Si4.jpg"
+    ]
+  }
+]
